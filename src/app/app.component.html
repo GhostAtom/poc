@@ -1,0 +1,8 @@
+<div class="search-form">
+  <h1>GitHub Repository Search</h1>
+  <form (submit)="onSearchSubmit(searchTerm.value)">
+    <input #searchTerm type="text" placeholder="Search for repositories" />
+    <button type="submit">Search</button>
+  </form>
+</div>
+<app-repo-details [term]="searchedTerm"></app-repo-details>
