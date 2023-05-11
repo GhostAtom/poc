@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 interface Owner {
   login: string;
@@ -31,12 +32,19 @@ interface ApiResponse {
   templateUrl: './repo-details.component.html',
   styleUrls: ['./repo-details.component.scss'],
 })
-export class RepoDetailsComponent{
+export class RepoDetailsComponent implements OnInit{
   @Input() term = '';
 
   repos: Repository[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route:ActivatedRoute) {}
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['q']) {
+        this.fetchReposData(params['q']);
+      }
+    });
+  }
 
   ngOnChanges(): void {
     this.fetchReposData(this.term);
